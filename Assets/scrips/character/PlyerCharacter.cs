@@ -61,27 +61,28 @@ public class PlyerCharacter : Entity
             Attack();
         }
 
-        Collider2D[] colliders = Physics2D.OverlapCapsuleAll((Vector2)transform.position + collider.offset,
-                                                             collider.size, collider.direction, 0);
-
-        foreach (var otherCollider in colliders)
-        {
-            Enemy enemy = otherCollider.GetComponent<Enemy>();
-            if (enemy != null)
-            {
-                TakeDamage();
-
-                Vector3 pushDirection = (transform.position - enemy.transform.position).normalized;
-                transform.position += pushDirection * knockbackStrength;
-            }
-        }
-
 
 
         animeThor.SetFloat("xVelocity", currentVelocity.x);
         animeThor.SetFloat("yVelocity", currentVelocity.y);
         animeThor.SetFloat("facingDirection", facingDirection);
         animeThor.SetBool("isMoving", isMoving);
+    }
+
+    private void FixedUpdate()
+    {
+        if (!isInvincible)
+        {
+            Collider2D[] colliders = Physics2D.OverlapCapsuleAll((Vector2)transform.position + collider.offset,collider.size, collider.direction, 0);
+            foreach (var otherCollider in colliders)
+            {
+                Enemy enemy = otherCollider.GetComponent<Enemy>();
+                if (enemy != null)
+                {
+                    TakeDamage(enemy);
+                }
+            }
+        }
     }
 
     private int GetFacingDirectionFromVector(Vector3 direction)
@@ -130,17 +131,17 @@ public class PlyerCharacter : Entity
     {
         interactionPosition = transform.position + localInteractionPositions[(int)facingDirection];
 
-        Collider2D otherCollider = Physics2D.OverlapBox(interactionPosition, interactionBoxSize, 0);
+        Collider2D otherCollider = Physics2D.OverlapBox(interactionPosition, interactionBoxSize, 0, attackableLayers);
 
         IDamageable damageable = otherCollider?.gameObject.GetComponent<IDamageable>();
-        damageable?.TakeDamage();
+        damageable?.TakeDamage(this);
     }
     private void OnDrawGizmos()
     {
         Gizmos.matrix = transform.localToWorldMatrix;
         if (Application.isPlaying)
         {
-            Gizmos.DrawWireCube(localInteractionPositions[(int)facingDirection], interactionBoxSize);
+            //Gizmos.DrawWireCube(localInteractionPositions[(int)facingDirection], interactionBoxSize);
         }
     }
 

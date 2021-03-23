@@ -218,7 +218,7 @@ GameObject:
   - component: {fileID: 619169848}
   - component: {fileID: 619169847}
   - component: {fileID: 619169850}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -238,6 +238,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialHP: 3
+  invinciblityDuration: 0.3
+  knockbackStrength: 1
+  attackableLayers:
+    serializedVersion: 2
+    m_Bits: 64
+  deathEffect: {fileID: 2966733732820401319, guid: 2d600da1e51b2fc48b401aa8639cb797, type: 3}
 --- !u!212 &619169848
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -336,6 +342,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51e8384db79ef064faea2e9ad386c32f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialHP: 3
+  invinciblityDuration: 0.3
+  knockbackStrength: 1
+  attackableLayers:
+    serializedVersion: 2
+    m_Bits: 0
   text: I'm a banana
 --- !u!1 &1737161798 stripped
 GameObject:
@@ -355,6 +367,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialHP: 3
+  invinciblityDuration: 0.3
+  knockbackStrength: 0.5
+  attackableLayers:
+    serializedVersion: 2
+    m_Bits: 128
   knockbackStrength: 0.5
 --- !u!95 &1737161802
 Animator:
